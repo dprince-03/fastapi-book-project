@@ -14,7 +14,7 @@ This project is a RESTful API built with FastAPI for managing a book collection.
 🔒 CORS middleware enabled
 
 ## Project Structure
-
+```
 fastapi-book-project/
 ├── api/
 │ ├── db/
@@ -33,6 +33,7 @@ fastapi-book-project/
 ├── main.py # Application entry point
 ├── requirements.txt # Project dependencies
 └── README.md
+```
 
 Copy
 
