@@ -27,7 +27,7 @@ jobs:
           RENDER_API_KEY: ${{ secrets.RENDER_API_KEY }}
         run: |
           # Install Render CLI
-          wget -qO- https://cli.render.com/install.sh | bash
+          npm install -g @renderinc/cli
 
           # Log in to Render
           render auth login --api-key $RENDER_API_KEY
