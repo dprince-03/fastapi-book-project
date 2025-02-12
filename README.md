@@ -16,22 +16,39 @@ This project is a RESTful API built with FastAPI for managing a book collection.
 ## Project Structure
 
 fastapi-book-project/
+
 ├── api/
+
 │ ├── db/
+
 │ │ ├── init.py
+
 │ │ └── schemas.py # Data models and in-memory database
+
 │ ├── routes/
+
 │ │ ├── init.py
+
 │ │ └── books.py # Book route handlers
+
 │ └── router.py # API router configuration
+
 ├── core/
+
 │ ├── init.py
+
 │ └── config.py # Application settings
+
 ├── tests/
+
 │ ├── init.py
+
 │ └── test_books.py # API endpoint tests
+
 ├── main.py # Application entry point
+
 ├── requirements.txt # Project dependencies
+
 └── README.md
 
 Copy
