@@ -15,7 +15,7 @@ jobs:
       - name: Set up Python
         uses: actions/setup-python@v4
         with:
-          python-version: "3.9"
+          python-version: "3.12"
 
       - name: Install dependencies
         run: |
@@ -25,12 +25,9 @@ jobs:
       - name: Deploy to Render
         env:
           RENDER_API_KEY: ${{ secrets.RENDER_API_KEY }}
+          RENDER_SERVICE_ID: ${{ secrets.RENDER_SERVICE_ID }}  # Add this line
         run: |
-          # Install Render CLI
-          npm install -g @renderinc/cli
-
-          # Log in to Render
-          render auth login --api-key $RENDER_API_KEY
-
-          # Trigger a deployment
-          render services deploy --service your-service-id
+          curl -s "https://api.render.com/v1/services/$RENDER_SERVICE_ID/deploys" \
+            -H "Authorization: Bearer $RENDER_API_KEY" \
+            -H "Content-Type: application/json" \
+            -X POST
