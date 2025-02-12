@@ -54,31 +54,29 @@ Copy
    cd fastapi-book-project
 
    ```
-
-Create a virtual environment:
-
-bash
-Copy
+2. Create a virtual environment:
+```
 python -m venv venv
 source venv/bin/activate  # On Windows: venv\Scripts\activate
-Install dependencies:
-
-bash
-Copy
+```
+3. Install dependencies:
+```
 pip install -r requirements.txt
 Running the Application
-Start the server:
-
-bash
-Copy
+```
+4.  Start the server:
+```
 uvicorn main:app
-Access the API documentation:
+```
 
+## Access the API documentation:
+```
 Swagger UI: [http://localhost:8000/docs](http://localhost:8000/docs)
 
 ReDoc: [http://localhost:8000/redoc](http://localhost:8000/redoc)
-
-API Endpoints
+```
+## API Endpoints
+```
 Books
 GET /api/v1/books/ - Get all books
 
@@ -89,13 +87,12 @@ POST /api/v1/books/ - Create a new book
 PUT /api/v1/books/{book_id} - Update a book
 
 DELETE /api/v1/books/{book_id} - Delete a book
-
+```
 Health Check
 GET /healthcheck - Check API status
 
-Book Schema
-json
-Copy
+## Book Schema
+```
 {
   "id": 1,
   "title": "Book Title",
@@ -103,82 +100,56 @@ Copy
   "publication_year": 2024,
   "genre": "Fantasy"
 }
-Available genres:
-Science Fiction
+```
+## Available genres:
 
-Fantasy
+-   Science Fiction
 
-Horror
+-   Fantasy
 
-Mystery
+-   Horror
 
-Romance
+-   Mystery
 
-Thriller
+-   Romance
 
-Running Tests
-bash
-Copy
-pytest
-Error Handling
-The API includes proper error handling for:
+-   Thriller
 
-Non-existent books
+### Running Tests
+```
+-   pytest
+-   Error Handling
+```
+### The API includes proper error handling for:
 
-Invalid book IDs
+-   Non-existent books
 
-Invalid genre types
+-   Invalid book IDs
 
-Malformed requests
+-   Invalid genre types
 
-Deployment
+-   Malformed requests
+
+## Deployment
 This project uses GitHub Actions for CI/CD. The CI pipeline runs tests on pull requests, and the CD pipeline deploys the application to Render when changes are merged into the main branch.
 
-Deploying to Render
-Create a Render web service and connect your GitHub repository.
+### Deploying to Render
+-   Create a Render web service and connect your GitHub repository.
 
-Add the RENDER_API_KEY and RENDER_SERVICE_ID secrets to GitHub.
+-   Add the RENDER_API_KEY and RENDER_SERVICE_ID secrets to GitHub.
 
-Push changes to the main branch to trigger the CD pipeline.
+-   Push changes to the main branch to trigger the CD pipeline.
 
-Contributing
-Fork the repository.
+## Contributing
+-   Fork the repository.
 
-Create a feature branch (git checkout -b feature/AmazingFeature).
+-   Create a feature branch (git checkout -b feature/AmazingFeature).
 
-Commit changes (git commit -m 'Add AmazingFeature').
+-   Commit changes (git commit -m 'Add AmazingFeature').
 
-Push to branch (git push origin feature/AmazingFeature).
+-   Push to branch (git push origin feature/AmazingFeature).
 
-Open a Pull Request.
-
-License
-This project is licensed under the MIT License - see the LICENSE file for details.
-
-Support
-For support, please open an issue in the GitHub repository.
-
-Copy
-
----
-
-### **Key Changes**
-
-1. **Added the Deployment Section**:
-
-   - The **Deployment** section explains how to deploy the application to Render using GitHub Actions.
-   - It includes steps for setting up Render and triggering the CD pipeline.
-2. **Kept the Existing Structure**:
-
-   - The rest of the `README.md` file remains unchanged, ensuring all existing information (e.g., installation, API endpoints, testing) is preserved.
-
----
-
-### **Why This Matters**
-
-- **Clarity**: The `README.md` file now provides a complete guide for setting up, testing, and deploying the application.
-- **Reproducibility**: Anyone who clones your repository can follow the instructions to run the application locally or deploy it to Render.
-- **Professionalism**: A well-documented project demonstrates attention to detail and makes it easier for others to contribute or use your work.
+-   Open a Pull Request.
 
 ---
 
@@ -190,3 +161,9 @@ Copy
 - [X] All tests pass, and the application works as expected.
 
 ---
+
+License
+This project is licensed under the MIT License - see the LICENSE file for details.
+
+Support
+For support, please open an issue in the GitHub repository.
