@@ -27,11 +27,10 @@ jobs:
           RENDER_API_KEY: ${{ secrets.RENDER_API_KEY }}
         run: |
           # Install Render CLI
-          curl -fsSL https://cli.render.com/install.sh | bash
+          wget -qO- https://cli.render.com/install.sh | bash
 
           # Log in to Render
           render auth login --api-key $RENDER_API_KEY
 
           # Trigger a deployment
           render services deploy --service your-service-id
-          
