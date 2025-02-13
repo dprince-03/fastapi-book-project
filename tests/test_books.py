@@ -15,6 +15,26 @@ def test_get_single_book():
     assert data["author"] == "J.R.R. Tolkien"
 
 
+def test_get_book_by_id():
+    # Test valid book ID
+    # response = client.get("/api/v1/books/1") 
+    response = client.get("books/1")  
+    assert response.status_code == 200
+    assert response.json() == {
+        "id": 1,
+        "title": "The Hobbit",
+        "author": "J.R.R. Tolkien",
+        "publication_year": 1937,
+        "genre": "Science Fiction", 
+    }
+
+    # Test invalid book ID
+    # response = client.get("/api/v1/books/999")  
+    response = client.get("books/999")  
+    assert response.status_code == 404
+    assert response.json() == {"detail": "Book not found"}
+
+
 def test_create_book():
     new_book = {
         "id": 4,
