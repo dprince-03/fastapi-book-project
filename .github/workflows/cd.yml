@@ -70,7 +70,6 @@ jobs:
         with:
           host: ${{ secrets.AWS_EC2_HOST }}  # Public IP of your EC2 instance
           username: ubuntu  # Default username for Ubuntu EC2 instances
-          # key: ${{ secrets.AWS_EC2_SSH_KEY }}  # Private SSH key for EC2 access
           script: |
             cd /home/ubuntu/fastapi-book-project 
             git pull origin main
