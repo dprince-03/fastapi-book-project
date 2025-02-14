@@ -1,39 +1,4 @@
-# name: CD Pipeline
-
-# on:
-#   push:
-#     branches:
-#       - main
-
-# jobs:
-#   deploy:
-#     runs-on: ubuntu-latest
-#     steps:
-#       - name: Checkout repository
-#         uses: actions/checkout@v3
-
-#       - name: Set up Python
-#         uses: actions/setup-python@v4
-#         with:
-#           python-version: "3.12"
-
-#       - name: Install dependencies
-#         run: |
-#           python -m pip install --upgrade pip
-#           pip install -r requirements.txt
-
-#       - name: Deploy to Render
-#         env:
-#           RENDER_API_KEY: ${{ secrets.RENDER_API_KEY }}
-#           RENDER_SERVICE_ID: ${{ secrets.RENDER_SERVICE_ID }}  # Add this line
-#         run: |
-#           curl -s "https://api.render.com/v1/services/$RENDER_SERVICE_ID/deploys" \
-#             -H "Authorization: Bearer $RENDER_API_KEY" \
-#             -H "Content-Type: application/json" \
-#             -X POST
-
-
-name: CD Pipeline
+name: deploy
 
 on:
   push:
@@ -44,36 +9,35 @@ jobs:
   deploy:
     runs-on: ubuntu-latest
     steps:
-      - name: Checkout repository
-        uses: actions/checkout@v3
-
-      - name: Set up Python
-        uses: actions/setup-python@v4
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v4
         with:
-          python-version: "3.12"  
+          python-version: 3.12
 
-      - name: Cache dependencies
-        uses: actions/cache@v3
+      - name: Deploy to Server
+        uses: appleboy/ssh-action@v1.0.3
         with:
-          path: ~/.cache/pip
-          key: ${{ runner.os }}-pip-${{ hashFiles('requirements.txt') }}
-          restore-keys: |
-            ${{ runner.os }}-pip-
-
-      - name: Install dependencies
-        run: |
-          python -m pip install --upgrade pip
-          pip install -r requirements.txt
-
-      - name: Deploy to AWS EC2
-        uses: appleboy/ssh-action@master
-        with:
-          host: ${{ secrets.AWS_EC2_HOST }}  # Public IP of your EC2 instance
-          username: ubuntu  # Default username for Ubuntu EC2 instances
-          key: ${{ secrets.AWS_EC2_SSH_KEY }}  # Private SSH key for EC2 access
+          host: ${{secrets.SERVER_HOST}}
+          key: ${{secrets.SERVER_SSH_KEY}}
+          username: ${{secrets.SERVER_USERNAME}}
           script: |
-            cd /home/ubuntu/fastapi-book-project 
+            echo "deployment starting..."
+
+            # Navigate to project directory
+            cd fastapi-book-project
+            git fetch --all
             git pull origin main
-            pip install -r requirements.txt
-            sudo systemctl restart nginx
-            sudo systemctl restart fastapi  
+            python3 -m venv venv || exit 1
+            source venv/bin/activate || exit 1
+            python -m pip install --upgrade pip || exit 1
+            pip install -r requirements.txt || exit 1
+
+            # Stop existing application if running
+            echo "Stopping existing application..."
+            killall uvicorn || echo "No existing process found"
+            echo "Application stopped successfully"
+
+            # Start application
+            echo "Starting application..."
+            nohup uvicorn main:app --host 0.0.0.0 --port 8000 > app.log 2>&1 &
+            echo "Application started successfully"
